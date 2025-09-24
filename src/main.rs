@@ -26,7 +26,12 @@ async fn main() {
     }
     while let Some(signal) = rx.recv().await {
         log::info!("signal {} was processes", sig_name(signal));
-        if signal == SignalKind::interrupt().as_raw_value() {
+        if signal == SignalKind::interrupt().as_raw_value()
+            || signal == SignalKind::terminate().as_raw_value()
+            || signal == SignalKind::quit().as_raw_value()
+            || signal == SignalKind::alarm().as_raw_value()
+            || signal == 6 // SIGABRT
+        {
             log::info!("exiting in 1 second");
             tokio::time::sleep(Duration::from_secs(1)).await;
             break;
@@ -67,6 +72,8 @@ fn sig_name(sig: i32) -> &'static str {
         29 => "SIGIO",
         30 => "SIGPWR",
         31 => "SIGSYS",
+        32 => "UNKNOWN-32",
+        32 => "UNKNOWN-33",
         34 => "SIGRTMIN",
         35 => "SIGRTMIN+1",
         36 => "SIGRTMIN+2",
@@ -98,6 +105,6 @@ fn sig_name(sig: i32) -> &'static str {
         62 => "SIGRTMAX-2",
         63 => "SIGRTMAX-1",
         64 => "SIGRTMAX",
-        _ => "UNKNOWN",
+        _ => "UNKNOWN-65+",
     }
 }
