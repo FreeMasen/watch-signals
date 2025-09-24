@@ -73,7 +73,7 @@ fn sig_name(sig: i32) -> &'static str {
         30 => "SIGPWR",
         31 => "SIGSYS",
         32 => "UNKNOWN-32",
-        32 => "UNKNOWN-33",
+        33 => "UNKNOWN-33",
         34 => "SIGRTMIN",
         35 => "SIGRTMIN+1",
         36 => "SIGRTMIN+2",
